@@ -6,7 +6,6 @@ import com.mkassianney.demo.Model.ReservationData;
 import com.mkassianney.demo.Model.RoomData;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
@@ -29,14 +28,14 @@ public class Reservation {
 
     // para realizar a reserva precisa do número do quarto e em seguida fazer com que seu status mude;
 
-    public Reservation(){}
+    public Reservation(@Valid ReservationData reservationData, int roomNumber, roomType roomType, BigDecimal pricePerNight){}
 
     @JsonCreator
     public Reservation(@JsonProperty("value") @Valid ReservationData reservationData, RoomData roomData){
         this.checkIn = reservationData.checkIn();
         this.checkOut = reservationData.checkOut();
-        this.type = roomData.roomType();
         this.number = roomData.roomNumber();
+        this.type = roomData.roomType();
         this.price = roomData.pricePerNight();
     }
 }

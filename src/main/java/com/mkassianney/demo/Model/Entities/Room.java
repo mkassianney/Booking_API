@@ -26,7 +26,7 @@ public class Room {
     private roomType roomType;
     private BigDecimal pricePerNight;
     private String description;
-    private boolean available = true;
+    private boolean available;
 
     public Room(){}
 
@@ -35,5 +35,30 @@ public class Room {
         this.roomType = roomData.roomType();
         this.pricePerNight = roomData.pricePerNight();
         this.description = roomData.description();
+        this.available = true;
+    }
+
+    public Long getId() {
+        return Id;
+    }
+
+    public int getRoomNumber() {
+        return roomNumber;
+    }
+
+    public com.mkassianney.demo.Model.Enumerations.roomType getRoomType() {
+        return roomType;
+    }
+
+    public BigDecimal getPricePerNight() {
+        return pricePerNight;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }
