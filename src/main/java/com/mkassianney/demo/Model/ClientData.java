@@ -1,4 +1,4 @@
-package mkassianney.api.model;
+package com.mkassianney.demo.Model;
 
 import jakarta.persistence.Column;
 import jakarta.validation.Valid;

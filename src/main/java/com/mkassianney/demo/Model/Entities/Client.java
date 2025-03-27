@@ -2,8 +2,10 @@ package com.mkassianney.demo.Model.Entities;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.mkassianney.demo.Model.ClientData;
 import jakarta.persistence.*;
-import mkassianney.api.model.ClientData;
+import jakarta.validation.Valid;
+import com.mkassianney.demo.Model.ClientData;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
@@ -23,7 +25,7 @@ public class Client {
     public Client(){}
 
     @JsonCreator
-    public Client(@JsonProperty("value") ClientData clients) {
+    public Client(@JsonProperty("value") @Valid ClientData clients) {
         this.name = clients.name();
         this.cpf = clients.cpf();
         this.email = clients.email();
