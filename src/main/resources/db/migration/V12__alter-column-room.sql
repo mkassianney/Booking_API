@@ -1,0 +1,2 @@
+ALTER TABLE room
+    ALTER COLUMN room_number SET NOT NULL;
