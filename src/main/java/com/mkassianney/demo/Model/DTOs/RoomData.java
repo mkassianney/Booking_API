@@ -1,4 +1,4 @@
-package com.mkassianney.demo.Model;
+package com.mkassianney.demo.Model.DTOs;
 
 import com.mkassianney.demo.Model.Entities.Client;
 import com.mkassianney.demo.Model.Entities.Room;

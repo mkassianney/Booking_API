@@ -2,10 +2,9 @@ package com.mkassianney.demo.Model.Entities;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.mkassianney.demo.Model.ClientData;
+import com.mkassianney.demo.Model.DTOs.ClientData;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
-import com.mkassianney.demo.Model.ClientData;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 

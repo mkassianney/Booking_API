@@ -1,4 +1,4 @@
-package com.mkassianney.demo.Model;
+package com.mkassianney.demo.Model.DTOs;
 
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;

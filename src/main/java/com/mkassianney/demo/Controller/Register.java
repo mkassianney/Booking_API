@@ -4,10 +4,10 @@ import com.mkassianney.demo.Model.Entities.Reservation;
 import com.mkassianney.demo.Model.Entities.Room;
 import com.mkassianney.demo.Model.Repository.ReservationRepository;
 import com.mkassianney.demo.Model.Repository.RoomRepository;
-import com.mkassianney.demo.Model.ReservationData;
-import com.mkassianney.demo.Model.RoomData;
+import com.mkassianney.demo.Model.DTOs.ReservationData;
+import com.mkassianney.demo.Model.DTOs.RoomData;
 import com.mkassianney.demo.Model.Entities.Client;
-import com.mkassianney.demo.Model.ClientData;
+import com.mkassianney.demo.Model.DTOs.ClientData;
 import com.mkassianney.demo.Model.Repository.ClientRepository;
 
 import jakarta.transaction.Transactional;

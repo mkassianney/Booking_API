@@ -2,13 +2,11 @@ package com.mkassianney.demo.Model.Entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mkassianney.demo.Model.Enumerations.roomType;
-import com.mkassianney.demo.Model.RoomData;
+import com.mkassianney.demo.Model.DTOs.RoomData;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
