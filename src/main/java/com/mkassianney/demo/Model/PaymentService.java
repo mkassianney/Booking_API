@@ -24,7 +24,7 @@ public class PaymentService {
 
     public Payment processPayment(PaymentData paymentData) throws Exception {
 
-        Stripe.apiKey = "sk_test_51R950lGbY04CYewiISSrT9Og83aslbJ8fcDhJf3S4vSwJ052L1LNyZKysrw5cIgmQyJ9PxpYkBNs47gdlvcrs1Um00VJvsqwG9";
+        Stripe.apiKey = "";
 
         PaymentIntentCreateParams params = PaymentIntentCreateParams.builder()
                 .setAmount(paymentData.getAmount().multiply(new BigDecimal(100)).longValue()) // Stripe usa centavos
