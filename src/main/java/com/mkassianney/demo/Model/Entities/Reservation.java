@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -15,6 +16,7 @@ import java.util.Date;
 @Entity
 @Table(name = "reservation")
 @Getter
+@NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class Reservation {
     @Id

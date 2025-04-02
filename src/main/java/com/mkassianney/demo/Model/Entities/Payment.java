@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mkassianney.demo.Model.DTOs.PaymentData;
 import com.mkassianney.demo.Model.Enumerations.PaymentStatus;
+import com.mkassianney.demo.Model.Repository.ReservationRepository;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -21,7 +23,7 @@ public class Payment {
     private Long id;
     @OneToOne
     @JoinColumn(name = "reservation_id", nullable = false)
-    private @NotNull Long reservation;
+    private Reservation reservation;
     private BigDecimal amount;
     private String currency;
     @Enumerated(EnumType.STRING)
@@ -35,9 +37,9 @@ public class Payment {
 
     public Payment(){}
     @JsonCreator
-    public Payment(@JsonProperty("value") @Valid PaymentData paymentData){
+    public Payment(@JsonProperty("value") @Valid Reservation reservation, PaymentData paymentData){
 
-        this.reservation = paymentData.reservation_id();
+        this.reservation = reservation;
         this.amount = paymentData.amount();
         this.currency = paymentData.currency();
         this.paymentStatus = PaymentStatus.valueOf("PENDING");
@@ -51,7 +53,7 @@ public class Payment {
         return id;
     }
 
-    public Long getReservation() {
+    public Reservation getReservation() {
         return reservation;
     }
 
@@ -83,7 +85,7 @@ public class Payment {
         return updatedAt;
     }
 
-    public void setReservation(Long reservation) {
+    public void setReservation(Reservation reservation) {
         this.reservation = reservation;
     }
 
