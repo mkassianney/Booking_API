@@ -1,18 +1,21 @@
 package com.mkassianney.demo.Controller;
 
+import com.mkassianney.demo.Model.DTOs.*;
+import com.mkassianney.demo.Model.Entities.Client;
 import com.mkassianney.demo.Model.Entities.Reservation;
+import com.mkassianney.demo.Model.Service.ReservationService;
 import com.mkassianney.demo.Model.Entities.Room;
+import com.mkassianney.demo.Model.Repository.ClientRepository;
+import com.mkassianney.demo.Model.Repository.PaymentsRepository;
 import com.mkassianney.demo.Model.Repository.ReservationRepository;
 import com.mkassianney.demo.Model.Repository.RoomRepository;
-import com.mkassianney.demo.Model.DTOs.ReservationData;
-import com.mkassianney.demo.Model.DTOs.RoomData;
-import com.mkassianney.demo.Model.Entities.Client;
-import com.mkassianney.demo.Model.DTOs.ClientData;
-import com.mkassianney.demo.Model.Repository.ClientRepository;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,6 +30,10 @@ public class Register {
     private RoomRepository roomRepository;
     @Autowired
     private ReservationRepository reservationRepository;
+    @Autowired
+    private PaymentsRepository paymentsRepository;
+    @Autowired
+    private ReservationService reservationService;
 
     @PostMapping("/register")
     @Transactional
@@ -42,13 +49,16 @@ public class Register {
 
     @PostMapping("/newReservation")
     @Transactional
-    public void newReservation(@RequestBody @Valid ReservationData reservationData, Room r){
-        reservationRepository.save(new Reservation(reservationData, r.getRoomNumber(),r.getRoomType(),r.getPricePerNight()));
+    public void newReservation(@RequestBody @Valid ReservationData reservationData){
+        reservationService.createReservation(reservationData);
     }
 
     @GetMapping("/roomList")
-    public List<RoomData> roomList(){
-        return roomRepository.findAll().stream().map(RoomData::new).toList();
+    public Page<RoomDataList> roomList(@PageableDefault(size = 10, sort = {"roomNumber"}) Pageable pageable){
+        return roomRepository.findAll(pageable).map(RoomDataList::new);
     }
+
+
+
 
 }

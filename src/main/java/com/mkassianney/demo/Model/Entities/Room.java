@@ -19,7 +19,7 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    private int roomNumber;
+    private Integer roomNumber;
     @Enumerated(EnumType.STRING)
     private roomType roomType;
     private BigDecimal pricePerNight;
@@ -58,5 +58,9 @@ public class Room {
 
     public String getDescription() {
         return description;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 }

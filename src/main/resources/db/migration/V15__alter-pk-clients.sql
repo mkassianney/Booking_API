@@ -1,0 +1,1 @@
+ALTER TABLE client ADD PRIMARY KEY (id,cpf);
