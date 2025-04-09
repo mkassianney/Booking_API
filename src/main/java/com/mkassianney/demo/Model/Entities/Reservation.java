@@ -28,8 +28,11 @@ public class Reservation {
     private LocalDate checkOut;
     @Enumerated(EnumType.STRING)
     private roomType type;
-    private int number;
+    @Column(name = "number")
+    private Integer number;
     private BigDecimal price;
+
+    public Reservation(){}
 
     public Reservation(ReservationData reservation, Room room) {
         this.checkIn = reservation.checkIn();
@@ -39,5 +42,28 @@ public class Reservation {
         this.price = room.getPricePerNight();
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public LocalDate getCheckIn() {
+        return checkIn;
+    }
+
+    public LocalDate getCheckOut() {
+        return checkOut;
+    }
+
+    public roomType getType() {
+        return type;
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
 }
 

@@ -1,5 +1,6 @@
 package com.mkassianney.demo.Model.DTOs;
 
+import com.mkassianney.demo.Model.Entities.Reservation;
 import com.mkassianney.demo.Model.Entities.Room;
 import com.mkassianney.demo.Model.Enumerations.roomType;
 import jakarta.persistence.EnumType;

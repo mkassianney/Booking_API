@@ -58,6 +58,11 @@ public class Register {
         return roomRepository.findAll(pageable).map(RoomDataList::new);
     }
 
+    @GetMapping("/reservationList")
+    public Page<ReservationDataList> reservationList(@PageableDefault(size = 10, sort = {"number"}) Pageable pageable){
+        return reservationRepository.findAll(pageable).map(ReservationDataList::new);
+    }
+
 
 
 
