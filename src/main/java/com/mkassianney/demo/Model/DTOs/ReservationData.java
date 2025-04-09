@@ -1,15 +1,20 @@
 package com.mkassianney.demo.Model.DTOs;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.JoinColumn;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public record ReservationData(
         @NotNull
-        Date checkIn,
+        @JoinColumn(name = "check_in")
+        LocalDate checkIn,
         @NotNull
-        Date checkOut,
+        @JoinColumn(name = "check_out")
+        LocalDate checkOut,
         @NotNull
-        int roomNumber) {
+        @JoinColumn(name = "room_n")
+        Integer number) {
 }

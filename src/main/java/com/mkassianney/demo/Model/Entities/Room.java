@@ -44,7 +44,7 @@ public class Room {
         return roomNumber;
     }
 
-    public com.mkassianney.demo.Model.Enumerations.roomType getRoomType() {
+    public roomType getRoomType() {
         return roomType;
     }
 

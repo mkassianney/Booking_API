@@ -5,6 +5,8 @@ import com.mkassianney.demo.Model.Entities.Reservation;
 import com.mkassianney.demo.Model.Entities.Room;
 import com.mkassianney.demo.Model.Repository.ReservationRepository;
 import com.mkassianney.demo.Model.Repository.RoomRepository;
+import jakarta.persistence.Column;
+import jakarta.persistence.JoinColumn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +18,7 @@ public class ReservationService {
     private RoomRepository roomR;
 
     public void createReservation(ReservationData data){
-        Room room = roomR.findById(data.roomNumber())
+        Room room = roomR.findByRoomNumber(data.number())
                 .orElseThrow(() -> new IllegalArgumentException("This room does´nt exist."));
 
         if (!room.isAvailable()) {
@@ -24,10 +26,7 @@ public class ReservationService {
         }
 
         Reservation reservation = new Reservation(
-                data,
-                room.getRoomNumber(),
-                room.getRoomType(),
-                room.getPricePerNight()
+                data,room
         );
 
         repository.save(reservation);
