@@ -1,35 +1,37 @@
 package com.mkassianney.demo.Model.DTOs;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-
 import java.math.BigDecimal;
-
 
 public record PaymentData(
         @NotNull
         Long reservation_id,
         @NotNull
+        Integer reservation_number,
+        @NotNull
         BigDecimal amount,
-        @NotBlank
+        @NotNull
         String currency,
-        @NotBlank
+        @NotNull
         String paymentMethod
 ) {
-        public Long getReservation_Id(){
-                return reservation_id;
-        }
+    public Long getReservation_Id(){
+        return reservation_id;
+    }
 
-        public BigDecimal getAmount(){
-                return amount;
-        }
+    public Integer getReservation_Number(){
+        return reservation_number;
+    }
 
-        public String getCurrency(){
-                return currency;
-        }
+    public BigDecimal getAmount(){
+        return amount;
+    }
 
-        public String getPaymentMethod(){
-                return paymentMethod;
-        }
+    public String getCurrency(){
+        return currency;
+    }
+
+    public String getPaymentMethod(){
+        return paymentMethod;
+    }
 }

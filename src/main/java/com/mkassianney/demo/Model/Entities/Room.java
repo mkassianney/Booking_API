@@ -10,7 +10,7 @@ import lombok.Getter;
 
 import java.math.BigDecimal;
 
-@Entity
+@Entity(name = "Room")
 @Table(name = "room")
 @Getter
 @EqualsAndHashCode(of = "roomNumber")

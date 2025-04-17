@@ -13,6 +13,8 @@ import java.util.Date;
 
 public record ReservationDataList (
         @NotNull
+        Long id,
+        @NotNull
         LocalDate checkIn,
         @NotNull
         LocalDate checkOut,
@@ -24,6 +26,6 @@ public record ReservationDataList (
         BigDecimal price
 ){
         public ReservationDataList(Reservation reservation){
-                this(reservation.getCheckIn(),reservation.getCheckOut(),reservation.getNumber(),reservation.getType(),reservation.getPrice());
+                this(reservation.getId(),reservation.getCheckIn(),reservation.getCheckOut(),reservation.getNumber(),reservation.getType(),reservation.getPrice());
         }
 }

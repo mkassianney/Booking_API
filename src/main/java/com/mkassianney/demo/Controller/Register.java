@@ -2,7 +2,7 @@ package com.mkassianney.demo.Controller;
 
 import com.mkassianney.demo.Model.DTOs.*;
 import com.mkassianney.demo.Model.Entities.Client;
-import com.mkassianney.demo.Model.Entities.Reservation;
+import com.mkassianney.demo.Model.Service.PaymentsService;
 import com.mkassianney.demo.Model.Service.ReservationService;
 import com.mkassianney.demo.Model.Entities.Room;
 import com.mkassianney.demo.Model.Repository.ClientRepository;
@@ -18,7 +18,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/reservations")
@@ -32,6 +31,8 @@ public class Register {
     private ReservationRepository reservationRepository;
     @Autowired
     private PaymentsRepository paymentsRepository;
+    @Autowired
+    private PaymentsService paymentsService;
     @Autowired
     private ReservationService reservationService;
 
@@ -64,6 +65,11 @@ public class Register {
     }
 
 
+    @PostMapping("/toPay")
+    @Transactional
+    public void newPayment(@RequestBody @Valid PaymentData paymentData){
+        paymentsService.createPayment(paymentData);
+    }
 
 
 }

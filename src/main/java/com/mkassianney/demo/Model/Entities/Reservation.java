@@ -1,23 +1,19 @@
 package com.mkassianney.demo.Model.Entities;
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mkassianney.demo.Model.Enumerations.roomType;
 import com.mkassianney.demo.Model.DTOs.ReservationData;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Entity
+@Entity(name = "Reservation")
 @Table(name = "reservation")
 @Getter
-@NoArgsConstructor
 @EqualsAndHashCode(of = "id")
+
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

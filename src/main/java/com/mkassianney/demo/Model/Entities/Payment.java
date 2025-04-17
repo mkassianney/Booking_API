@@ -1,29 +1,31 @@
 package com.mkassianney.demo.Model.Entities;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mkassianney.demo.Model.DTOs.PaymentData;
 import com.mkassianney.demo.Model.Enumerations.PaymentStatus;
-import com.mkassianney.demo.Model.Repository.ReservationRepository;
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
-@Entity
+@Entity(name = "Payment")
 @Table(name = "payments")
+@Getter
+@Setter
+@EqualsAndHashCode
 public class Payment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToOne
-    @JoinColumn(name = "reservation_id", nullable = false)
+    @JoinColumn(name = "reservation_id")
     private Reservation reservation;
+    @Column(name = "reservation_number")
+    private @NotNull Integer reservation_number;
     private BigDecimal amount;
     private String currency;
     @Enumerated(EnumType.STRING)
@@ -35,11 +37,13 @@ public class Payment {
     private LocalDateTime updatedAt;
 
 
-    public Payment(){}
-    @JsonCreator
-    public Payment(@JsonProperty("value") @Valid Reservation reservation, PaymentData paymentData){
+    public Payment() {
+    }
+
+    public Payment(Reservation reservation, PaymentData paymentData) {
 
         this.reservation = reservation;
+        this.reservation_number = paymentData.reservation_number();
         this.amount = paymentData.amount();
         this.currency = paymentData.currency();
         this.paymentStatus = PaymentStatus.valueOf("PENDING");
@@ -49,43 +53,7 @@ public class Payment {
         this.updatedAt = LocalDateTime.now();
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public Reservation getReservation() {
-        return reservation;
-    }
-
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
-    public String getCurrency() {
-        return currency;
-    }
-
-    public PaymentStatus getPaymentStatus() {
-        return paymentStatus;
-    }
-
-    public String getPaymentMethod() {
-        return paymentMethod;
-    }
-
-    public String getTransactionId() {
-        return transactionId;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setReservation(Reservation reservation) {
+    public void setReservation(Reservation reservation){
         this.reservation = reservation;
     }
 
@@ -109,31 +77,15 @@ public class Payment {
         this.transactionId = transactionId;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Payment payment = (Payment) o;
-        return Objects.equals(id, payment.id) && Objects.equals(reservation, payment.reservation) && Objects.equals(transactionId, payment.transactionId);
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, reservation, transactionId);
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
-
-    @Override
-    public String toString() {
-        return "Payment{" +
-                "id=" + id +
-                ", reservation=" + reservation +
-                ", amount=" + amount +
-                ", currency='" + currency + '\'' +
-                ", paymentStatus=" + paymentStatus +
-                ", paymentMethod='" + paymentMethod + '\'' +
-                ", transactionId='" + transactionId + '\'' +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
+    @Transient
+    public Integer getReservationNumber() {
+        return reservation != null ? reservation.getNumber() : null;
     }
 }
