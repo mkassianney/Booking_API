@@ -30,4 +30,24 @@ public class Client {
         this.email = clients.email();
         this.cellphone = clients.cellphone();
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public String getCellphone() {
+        return cellphone;
+    }
 }

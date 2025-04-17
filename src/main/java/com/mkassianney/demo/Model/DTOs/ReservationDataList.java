@@ -23,9 +23,16 @@ public record ReservationDataList (
         @Enumerated(EnumType.STRING)
         roomType type,
         @NotNull
-        BigDecimal price
+        BigDecimal price,
+        @NotNull
+        String client_name,
+        @NotNull
+        String client_cpf,
+        @NotNull
+        String client_email
+
 ){
         public ReservationDataList(Reservation reservation){
-                this(reservation.getId(),reservation.getCheckIn(),reservation.getCheckOut(),reservation.getNumber(),reservation.getType(),reservation.getPrice());
+                this(reservation.getId(),reservation.getCheckIn(),reservation.getCheckOut(),reservation.getNumber(),reservation.getType(),reservation.getPrice(), reservation.getClientName(), reservation.getClientCpf(),reservation.getClientEmail());
         }
 }

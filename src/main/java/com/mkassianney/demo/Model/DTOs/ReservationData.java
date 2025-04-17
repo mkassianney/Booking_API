@@ -16,5 +16,7 @@ public record ReservationData(
         LocalDate checkOut,
         @NotNull
         @JoinColumn(name = "room_n")
-        Integer number) {
+        Integer number,
+        Long client_id,
+        String client_cpf) {
 }
