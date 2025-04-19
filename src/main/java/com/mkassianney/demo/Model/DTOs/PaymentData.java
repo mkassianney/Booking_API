@@ -13,13 +13,15 @@ public record PaymentData(
         @NotNull
         String currency,
         @NotNull
-        String paymentMethod
+        String paymentMethod,
+        @NotNull
+        String client_cpf
 ) {
-    public Long getReservation_Id(){
+    public Long getReservationId(){
         return reservation_id;
     }
 
-    public Integer getReservation_Number(){
+    public Integer getReservationNumber(){
         return reservation_number;
     }
 
@@ -33,5 +35,8 @@ public record PaymentData(
 
     public String getPaymentMethod(){
         return paymentMethod;
+    }
+    public String getClientCpf(){
+        return client_cpf;
     }
 }

@@ -5,6 +5,7 @@ import com.mkassianney.demo.Model.Entities.Client;
 import com.mkassianney.demo.Model.Entities.Payment;
 import com.mkassianney.demo.Model.Entities.Reservation;
 import com.mkassianney.demo.Model.Enumerations.PaymentStatus;
+import com.mkassianney.demo.Model.Repository.ClientRepository;
 import com.mkassianney.demo.Model.Repository.PaymentsRepository;
 import com.mkassianney.demo.Model.Repository.ReservationRepository;
 import com.stripe.Stripe;
@@ -15,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.Period;
 import java.util.List;
 
@@ -27,6 +27,8 @@ public class PaymentsService {
     private PaymentsRepository paymentRepository;
     @Autowired
     private ReservationRepository reservationRepository;
+    @Autowired
+    private ClientRepository clientRepository;
 
     private Reservation reservation;
     private Client c;
@@ -37,6 +39,9 @@ public class PaymentsService {
         }
         reservation = reservationRepository.findById(paymentData.reservation_id())
                 .orElseThrow(() -> new EntityNotFoundException("Reservation not found with id: " + paymentData.reservation_id()));
+
+        c = clientRepository.findByCpf(paymentData.client_cpf())
+                .orElseThrow(() -> new EntityNotFoundException("Client not found with cpf: " + paymentData.client_cpf()));
 
         Payment payment = new Payment(reservation,paymentData);
 
@@ -49,7 +54,7 @@ public class PaymentsService {
 
     public Payment processPayment (PaymentData paymentData) throws Exception {
 
-        Stripe.apiKey = "sk_test_51R950lGbY04CYewiISSrT9Og83aslbJ8fcDhJf3S4vSwJ052L1LNyZKysrw5cIgmQyJ9PxpYkBNs47gdlvcrs1Um00VJvsqwG9";
+        Stripe.apiKey = "";
 
         Period p = Period.between(reservation.getCheckIn(),reservation.getCheckOut());
         int d = p.getDays();
@@ -62,19 +67,24 @@ public class PaymentsService {
         PaymentIntentCreateParams params = PaymentIntentCreateParams.builder()
                 .setAmount(amountInCents)
                 .setCurrency(paymentData.getCurrency())
-                .setPaymentMethod(String.valueOf(List.of("card","pix","boleto")))
+                .setPaymentMethod(paymentData.getPaymentMethod())
+                .setReceiptEmail(reservation.getClientEmail())
                 .build();
 
         PaymentIntent paymentIntent = PaymentIntent.create(params);
 
-        Payment payment = new Payment();
-        payment.setReservation(reservation);
-        payment.setAmount(paymentData.amount());
-        payment.setCurrency(paymentData.currency());
-        payment.setPaymentMethod(paymentData.paymentMethod());
-        payment.setTransactionId(paymentIntent.getId());
-        payment.setPaymentStatus(PaymentStatus.PENDING);
+        try{
+            Payment payment = new Payment();
+            payment.setReservation(reservation);
+            payment.setAmount(paymentData.amount());
+            payment.setCurrency(paymentData.currency());
+            payment.setPaymentMethod(paymentData.paymentMethod());
+            payment.setTransactionId(paymentIntent.getId());
+            payment.setPaymentStatus(PaymentStatus.PAID);
 
-        return paymentRepository.save(payment);
+            return paymentRepository.save(payment);
+        } catch(Exception exception){
+            throw new RuntimeException(exception);
+        }
     }
 }

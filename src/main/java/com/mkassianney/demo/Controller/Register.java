@@ -67,8 +67,14 @@ public class Register {
 
     @PostMapping("/toPay")
     @Transactional
-    public void newPayment(@RequestBody @Valid PaymentData paymentData){
+    public void newPayment(@RequestBody @Valid PaymentData paymentData) throws Exception {
         paymentsService.createPayment(paymentData);
+        paymentsService.processPayment(paymentData);
+    }
+
+    @GetMapping("/paymentList")
+    public Page<PaymentDataList> paymentList(@PageableDefault(size = 10, sort = {"id"}) Pageable pageable){
+        return paymentsRepository.findAll(pageable).map(PaymentDataList::new);
     }
 
 
