@@ -1,1 +1,0 @@
-ALTER TABLE payments ADD PRIMARY KEY (id,reservation_id, transaction_id);

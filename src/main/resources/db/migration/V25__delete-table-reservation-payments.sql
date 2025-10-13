@@ -1,1 +1,0 @@
-DROP TABLE reservation_payment;

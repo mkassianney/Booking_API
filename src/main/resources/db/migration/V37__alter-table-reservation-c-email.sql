@@ -1,2 +1,0 @@
-ALTER TABLE reservation
-    ADD COLUMN client_email VARCHAR(60) NOT NULL UNIQUE;

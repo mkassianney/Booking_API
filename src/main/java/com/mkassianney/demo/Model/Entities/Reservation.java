@@ -8,11 +8,12 @@ import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.Period;
 
 import static org.flywaydb.core.api.configuration.S3ClientFactory.getClient;
 
 @Entity(name = "Reservation")
-@Table(name = "reservation")
+@Table(name = "reservations")
 @Getter
 @EqualsAndHashCode(of = "id")
 
@@ -21,9 +22,10 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate checkIn;
+    private LocalDate check_in;
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate checkOut;
+    private LocalDate check_out;
+    private Period duration;
     private String client_name;
     private String client_cpf;
     private Long client_id;
@@ -37,8 +39,9 @@ public class Reservation {
     public Reservation(){}
 
     public Reservation(ReservationData reservation, Room room, Client client) {
-        this.checkIn = reservation.checkIn();
-        this.checkOut = reservation.checkOut();
+        this.check_in = reservation.check_in();
+        this.duration = reservation.duration();
+        this.check_out = reservation.check_out();
         this.number = reservation.number();
         this.type = room.getRoomType();
         this.price = room.getPricePerNight();
@@ -53,11 +56,13 @@ public class Reservation {
     }
 
     public LocalDate getCheckIn() {
-        return checkIn;
+        return check_in;
     }
 
+    public Period getDuration(){return duration;}
+
     public LocalDate getCheckOut() {
-        return checkOut;
+        return check_out;
     }
 
     public roomType getType() {

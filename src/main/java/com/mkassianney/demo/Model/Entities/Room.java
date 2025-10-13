@@ -11,9 +11,9 @@ import lombok.Getter;
 import java.math.BigDecimal;
 
 @Entity(name = "Room")
-@Table(name = "room")
+@Table(name = "rooms")
 @Getter
-@EqualsAndHashCode(of = "roomNumber")
+@EqualsAndHashCode(of = "room_number")
 public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

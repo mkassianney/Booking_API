@@ -11,6 +11,6 @@ import java.util.Optional;
 
 @Repository
 public interface ClientRepository extends JpaRepository<Client, CPF> {
-    @NativeQuery(value = "SELECT * FROM client WHERE cpf = ?1")
+    @NativeQuery(value = "SELECT * FROM clients WHERE cpf = ?1")
     Optional<Client> findByCpf(String s);
 }

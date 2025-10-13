@@ -9,15 +9,18 @@ import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.Date;
 
 public record ReservationDataList (
         @NotNull
         Long id,
         @NotNull
-        LocalDate checkIn,
+        LocalDate check_in,
         @NotNull
-        LocalDate checkOut,
+        Period duration,
+        @NotNull
+        LocalDate check_out,
         @NotNull
         Integer number,
         @Enumerated(EnumType.STRING)
@@ -33,6 +36,6 @@ public record ReservationDataList (
 
 ){
         public ReservationDataList(Reservation reservation){
-                this(reservation.getId(),reservation.getCheckIn(),reservation.getCheckOut(),reservation.getNumber(),reservation.getType(),reservation.getPrice(), reservation.getClientName(), reservation.getClientCpf(),reservation.getClientEmail());
+                this(reservation.getId(),reservation.getCheckIn(), reservation.getDuration(),reservation.getCheckOut(),reservation.getNumber(),reservation.getType(),reservation.getPrice(), reservation.getClientName(), reservation.getClientCpf(),reservation.getClientEmail());
         }
 }

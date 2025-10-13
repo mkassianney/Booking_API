@@ -1,2 +1,0 @@
-ALTER TABLE payments
-    ADD COLUMN client_name VARCHAR(70) NOT NULL;

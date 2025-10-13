@@ -9,6 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface RoomRepository extends JpaRepository<Room, Integer> {
-    @NativeQuery(value = "SELECT * FROM room WHERE room_number = ?1")
+    @NativeQuery(value = "SELECT * FROM rooms WHERE room_number = ?")
     Optional<Room> findByRoomNumber(Integer roomNumber);
 }

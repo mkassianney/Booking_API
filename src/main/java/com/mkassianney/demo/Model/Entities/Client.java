@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Entity(name = "Client")
-@Table(name = "client")
+@Table(name = "clients")
 @Getter
 @EqualsAndHashCode(of = "cpf")
 public class Client {
