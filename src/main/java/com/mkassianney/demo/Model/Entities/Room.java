@@ -2,7 +2,7 @@ package com.mkassianney.demo.Model.Entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mkassianney.demo.Model.Enumerations.roomType;
-import com.mkassianney.demo.Model.DTOs.RoomData;
+import com.mkassianney.demo.DTOs.RoomData;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import lombok.EqualsAndHashCode;

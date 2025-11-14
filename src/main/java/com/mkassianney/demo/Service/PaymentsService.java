@@ -1,13 +1,13 @@
-package com.mkassianney.demo.Model.Service;
+package com.mkassianney.demo.Service;
 
-import com.mkassianney.demo.Model.DTOs.PaymentData;
+import com.mkassianney.demo.DTOs.PaymentData;
 import com.mkassianney.demo.Model.Entities.Client;
 import com.mkassianney.demo.Model.Entities.Payment;
 import com.mkassianney.demo.Model.Entities.Reservation;
 import com.mkassianney.demo.Model.Enumerations.PaymentStatus;
-import com.mkassianney.demo.Model.Repository.ClientRepository;
-import com.mkassianney.demo.Model.Repository.PaymentsRepository;
-import com.mkassianney.demo.Model.Repository.ReservationRepository;
+import com.mkassianney.demo.Repository.ClientRepository;
+import com.mkassianney.demo.Repository.PaymentsRepository;
+import com.mkassianney.demo.Repository.ReservationRepository;
 import com.stripe.Stripe;
 import com.stripe.model.PaymentIntent;
 import com.stripe.param.PaymentIntentCreateParams;
@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.Period;
-import java.util.List;
 
 
 @Service

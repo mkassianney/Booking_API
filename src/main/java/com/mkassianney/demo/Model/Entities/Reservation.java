@@ -1,7 +1,7 @@
 package com.mkassianney.demo.Model.Entities;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mkassianney.demo.Model.Enumerations.roomType;
-import com.mkassianney.demo.Model.DTOs.ReservationData;
+import com.mkassianney.demo.DTOs.ReservationData;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -9,8 +9,6 @@ import lombok.Getter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Period;
-
-import static org.flywaydb.core.api.configuration.S3ClientFactory.getClient;
 
 @Entity(name = "Reservation")
 @Table(name = "reservations")

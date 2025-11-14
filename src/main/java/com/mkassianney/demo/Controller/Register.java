@@ -1,14 +1,14 @@
 package com.mkassianney.demo.Controller;
 
-import com.mkassianney.demo.Model.DTOs.*;
+import com.mkassianney.demo.DTOs.*;
 import com.mkassianney.demo.Model.Entities.Client;
-import com.mkassianney.demo.Model.Service.PaymentsService;
-import com.mkassianney.demo.Model.Service.ReservationService;
+import com.mkassianney.demo.Service.PaymentsService;
+import com.mkassianney.demo.Service.ReservationService;
 import com.mkassianney.demo.Model.Entities.Room;
-import com.mkassianney.demo.Model.Repository.ClientRepository;
-import com.mkassianney.demo.Model.Repository.PaymentsRepository;
-import com.mkassianney.demo.Model.Repository.ReservationRepository;
-import com.mkassianney.demo.Model.Repository.RoomRepository;
+import com.mkassianney.demo.Repository.ClientRepository;
+import com.mkassianney.demo.Repository.PaymentsRepository;
+import com.mkassianney.demo.Repository.ReservationRepository;
+import com.mkassianney.demo.Repository.RoomRepository;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;

@@ -1,14 +1,12 @@
-package com.mkassianney.demo.Model.Service;
+package com.mkassianney.demo.Service;
 
-import com.mkassianney.demo.Model.DTOs.ReservationData;
+import com.mkassianney.demo.DTOs.ReservationData;
 import com.mkassianney.demo.Model.Entities.Reservation;
 import com.mkassianney.demo.Model.Entities.Room;
-import com.mkassianney.demo.Model.Repository.ClientRepository;
-import com.mkassianney.demo.Model.Repository.ReservationRepository;
-import com.mkassianney.demo.Model.Repository.RoomRepository;
+import com.mkassianney.demo.Repository.ClientRepository;
+import com.mkassianney.demo.Repository.ReservationRepository;
+import com.mkassianney.demo.Repository.RoomRepository;
 import com.mkassianney.demo.Model.Entities.Client;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

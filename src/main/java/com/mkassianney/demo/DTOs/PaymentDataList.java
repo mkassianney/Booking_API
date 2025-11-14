@@ -1,4 +1,4 @@
-package com.mkassianney.demo.Model.DTOs;
+package com.mkassianney.demo.DTOs;
 
 import com.mkassianney.demo.Model.Entities.Payment;
 import com.mkassianney.demo.Model.Enumerations.PaymentStatus;

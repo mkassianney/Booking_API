@@ -1,4 +1,4 @@
-package com.mkassianney.demo.Model.Repository;
+package com.mkassianney.demo.Repository;
 
 import br.com.caelum.stella.tinytype.CPF;
 import com.mkassianney.demo.Model.Entities.Client;

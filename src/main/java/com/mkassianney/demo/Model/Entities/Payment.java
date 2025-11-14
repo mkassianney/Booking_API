@@ -1,6 +1,6 @@
 package com.mkassianney.demo.Model.Entities;
 
-import com.mkassianney.demo.Model.DTOs.PaymentData;
+import com.mkassianney.demo.DTOs.PaymentData;
 import com.mkassianney.demo.Model.Enumerations.PaymentStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
