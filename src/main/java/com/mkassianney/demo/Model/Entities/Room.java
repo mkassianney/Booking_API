@@ -1,7 +1,7 @@
 package com.mkassianney.demo.Model.Entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.mkassianney.demo.Model.Enumerations.roomType;
+import com.mkassianney.demo.Model.Enumerations.RoomType;
 import com.mkassianney.demo.DTOs.RoomData;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
@@ -21,7 +21,7 @@ public class Room {
 
     private Integer roomNumber;
     @Enumerated(EnumType.STRING)
-    private roomType roomType;
+    private RoomType roomType;
     private BigDecimal pricePerNight;
     private String description;
     private boolean available;
@@ -44,7 +44,7 @@ public class Room {
         return roomNumber;
     }
 
-    public roomType getRoomType() {
+    public RoomType getRoomType() {
         return roomType;
     }
 

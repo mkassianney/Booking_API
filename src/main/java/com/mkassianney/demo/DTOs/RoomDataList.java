@@ -1,8 +1,7 @@
 package com.mkassianney.demo.DTOs;
 
-import com.mkassianney.demo.Model.Entities.Reservation;
 import com.mkassianney.demo.Model.Entities.Room;
-import com.mkassianney.demo.Model.Enumerations.roomType;
+import com.mkassianney.demo.Model.Enumerations.RoomType;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
@@ -14,7 +13,7 @@ public record RoomDataList(
         int roomNumber,
         @NotNull
         @Enumerated(EnumType.STRING)
-        roomType roomType,
+        RoomType roomType,
         @NotNull
         BigDecimal pricePerNight,
         @NotNull

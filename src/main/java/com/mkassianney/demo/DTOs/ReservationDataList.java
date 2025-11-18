@@ -1,16 +1,14 @@
 package com.mkassianney.demo.DTOs;
 
 import com.mkassianney.demo.Model.Entities.Reservation;
-import com.mkassianney.demo.Model.Enumerations.roomType;
+import com.mkassianney.demo.Model.Enumerations.RoomType;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
 import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.Date;
 
 public record ReservationDataList (
         @NotNull
@@ -24,7 +22,7 @@ public record ReservationDataList (
         @NotNull
         Integer number,
         @Enumerated(EnumType.STRING)
-        roomType type,
+        RoomType type,
         @NotNull
         BigDecimal price,
         @NotNull

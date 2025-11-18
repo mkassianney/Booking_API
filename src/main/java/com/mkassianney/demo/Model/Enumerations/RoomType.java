@@ -1,6 +1,6 @@
 package com.mkassianney.demo.Model.Enumerations;
 
-public enum roomType {
+public enum RoomType {
     SINGLE,
     DOUBLE,
     SUITE

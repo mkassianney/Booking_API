@@ -1,6 +1,6 @@
 package com.mkassianney.demo.Model.Entities;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.mkassianney.demo.Model.Enumerations.roomType;
+import com.mkassianney.demo.Model.Enumerations.RoomType;
 import com.mkassianney.demo.DTOs.ReservationData;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
@@ -29,7 +29,7 @@ public class Reservation {
     private Long client_id;
     private String client_email;
     @Enumerated(EnumType.STRING)
-    private roomType type;
+    private RoomType type;
     @Column(name = "number")
     private Integer number;
     private BigDecimal price;
@@ -63,7 +63,7 @@ public class Reservation {
         return check_out;
     }
 
-    public roomType getType() {
+    public RoomType getType() {
         return type;
     }
 

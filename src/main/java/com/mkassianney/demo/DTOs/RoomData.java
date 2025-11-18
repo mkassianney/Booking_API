@@ -1,14 +1,10 @@
 package com.mkassianney.demo.DTOs;
 
-import com.mkassianney.demo.Model.Entities.Client;
-import com.mkassianney.demo.Model.Entities.Room;
-import com.mkassianney.demo.Model.Enumerations.roomType;
-import jakarta.persistence.Column;
+import com.mkassianney.demo.Model.Enumerations.RoomType;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
 
-import java.beans.ConstructorProperties;
 import java.math.BigDecimal;
 
 public record RoomData(
@@ -16,7 +12,7 @@ public record RoomData(
         int roomNumber,
         @NotNull
         @Enumerated(EnumType.STRING)
-        roomType roomType,
+        RoomType roomType,
         @NotNull
         BigDecimal pricePerNight,
         @NotNull
