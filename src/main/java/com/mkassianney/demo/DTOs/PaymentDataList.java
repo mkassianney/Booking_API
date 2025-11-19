@@ -17,9 +17,7 @@ public record PaymentDataList (
         @NotNull
         Integer reservationNumber,
         @NotNull
-        String clientName,
-        @NotNull
-        String clientEmail,
+        Long client_id,
         @NotNull
         BigDecimal amount,
         @NotNull
@@ -38,7 +36,7 @@ public record PaymentDataList (
 
 ){
     public PaymentDataList(Payment payment){
-        this(payment.getId(),payment.getReservation(),payment.getReservationNumber(),payment.getClientName(),payment.getClientEmail(),
+        this(payment.getId(),payment.getReservation(),payment.getReservationNumber(),payment.getClient().getId(),
                 payment.getAmount(),payment.getCurrency(),payment.getPaymentStatus(),payment.getPaymentMethod(),payment.getTransactionId(),
                 payment.getCreatedAt(),payment.getUpdatedAt());
     }

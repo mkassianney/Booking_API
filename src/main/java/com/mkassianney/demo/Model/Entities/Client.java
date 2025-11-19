@@ -8,6 +8,9 @@ import jakarta.validation.Valid;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity(name = "Client")
 @Table(name = "clients")
 @Getter
@@ -20,6 +23,8 @@ public class Client {
     private String email;
     private String cpf;
     private String cellphone;
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    private List<Reservation> reservations = new ArrayList<>();
 
     public Client(){}
 

@@ -26,14 +26,10 @@ public record ReservationDataList (
         @NotNull
         BigDecimal price,
         @NotNull
-        String client_name,
-        @NotNull
-        String client_cpf,
-        @NotNull
-        String client_email
+        Long client_id
 
 ){
         public ReservationDataList(Reservation reservation){
-                this(reservation.getId(),reservation.getCheckIn(), reservation.getDuration(),reservation.getCheckOut(),reservation.getNumber(),reservation.getType(),reservation.getPrice(), reservation.getClientName(), reservation.getClientCpf(),reservation.getClientEmail());
+                this(reservation.getId(),reservation.getCheckIn(), reservation.getDuration(),reservation.getCheckOut(),reservation.getNumber(),reservation.getType(),reservation.getPrice(), reservation.getClient().getId());
         }
 }

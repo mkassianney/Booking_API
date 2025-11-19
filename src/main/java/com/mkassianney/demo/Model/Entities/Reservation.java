@@ -9,6 +9,8 @@ import lombok.Getter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "Reservation")
 @Table(name = "reservations")
@@ -24,10 +26,12 @@ public class Reservation {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate check_out;
     private Period duration;
-    private String client_name;
-    private String client_cpf;
-    private Long client_id;
-    private String client_email;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "client_id")
+    private Client client;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "room_id")
+    private Room room;
     @Enumerated(EnumType.STRING)
     private RoomType type;
     @Column(name = "number")
@@ -43,10 +47,8 @@ public class Reservation {
         this.number = reservation.number();
         this.type = room.getRoomType();
         this.price = room.getPricePerNight();
-        this.client_id = client.getId();
-        this.client_cpf = client.getCpf();
-        this.client_name = client.getName();
-        this.client_email = client.getEmail();
+        this.client = client;
+        this.room = room;
     }
 
     public Long getId() {
@@ -74,14 +76,13 @@ public class Reservation {
     public BigDecimal getPrice() {
         return price;
     }
-    public String getClientName(){
-        return client_name;
+
+    public Client getClient() {
+        return client;
     }
-    public String getClientCpf(){
-        return client_cpf;
-    }
-    public String getClientEmail(){
-        return client_email;
+
+    public Room getRoom() {
+        return room;
     }
 }
 

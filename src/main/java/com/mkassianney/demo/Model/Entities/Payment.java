@@ -26,10 +26,9 @@ public class Payment {
     private Reservation reservation;
     @Column(name = "reservation_number")
     private @NotNull Integer reservationNumber;
-    @Column(name  = "client_name")
-    private String clientName;
-    @Column(name  = "client_email")
-    private String clientEmail;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="client_id")
+    private Client client;
     private BigDecimal amount;
     private String currency;
     @Enumerated(EnumType.STRING)
@@ -48,8 +47,7 @@ public class Payment {
 
         this.reservation = reservation;
         this.reservationNumber = paymentData.reservation_number();
-        this.clientName = reservation.getClientName();
-        this.clientEmail = reservation.getClientEmail();
+        this.client = reservation.getClient();
         this.amount = paymentData.amount();
         this.currency = paymentData.currency();
         this.paymentStatus = PaymentStatus.valueOf("PENDING");
@@ -102,12 +100,8 @@ public class Payment {
         return reservationNumber;
     }
 
-    public String getClientName() {
-        return clientName;
-    }
-
-    public String getClientEmail() {
-        return clientEmail;
+    public Client getClient() {
+        return client;
     }
 
     public BigDecimal getAmount() {

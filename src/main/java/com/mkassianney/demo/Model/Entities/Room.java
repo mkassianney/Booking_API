@@ -9,6 +9,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "Room")
 @Table(name = "rooms")
@@ -25,6 +27,8 @@ public class Room {
     private BigDecimal pricePerNight;
     private String description;
     private boolean available;
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Reservation> reservations;
 
     public Room(){}
 

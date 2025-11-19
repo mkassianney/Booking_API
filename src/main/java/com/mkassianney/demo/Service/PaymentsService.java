@@ -67,7 +67,7 @@ public class PaymentsService {
                 .setAmount(amountInCents)
                 .setCurrency(paymentData.getCurrency())
                 .setPaymentMethod(paymentData.getPaymentMethod())
-                .setReceiptEmail(reservation.getClientEmail())
+                .setReceiptEmail(c.getEmail())
                 .build();
 
         PaymentIntent paymentIntent = PaymentIntent.create(params);
