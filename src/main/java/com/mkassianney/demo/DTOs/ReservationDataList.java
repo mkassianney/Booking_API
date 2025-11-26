@@ -16,13 +16,11 @@ public record ReservationDataList (
         @NotNull
         LocalDate check_in,
         @NotNull
-        Period duration,
+        int duration,
         @NotNull
         LocalDate check_out,
         @NotNull
         Integer number,
-        @Enumerated(EnumType.STRING)
-        RoomType type,
         @NotNull
         BigDecimal price,
         @NotNull
@@ -30,6 +28,6 @@ public record ReservationDataList (
 
 ){
         public ReservationDataList(Reservation reservation){
-                this(reservation.getId(),reservation.getCheckIn(), reservation.getDuration(),reservation.getCheckOut(),reservation.getNumber(),reservation.getType(),reservation.getPrice(), reservation.getClient().getId());
+                this(reservation.getId(),reservation.getCheckIn(), reservation.getDuration(),reservation.getCheckOut(),reservation.getNumber(),reservation.getPrice(), reservation.getClient().getId());
         }
 }

@@ -1,0 +1,2 @@
+ALTER TABLE clients
+    ALTER COLUMN cellphone TYPE VARCHAR(11);

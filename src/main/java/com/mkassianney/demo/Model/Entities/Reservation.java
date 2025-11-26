@@ -9,8 +9,7 @@ import lombok.Getter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.temporal.ChronoUnit;
 
 @Entity(name = "Reservation")
 @Table(name = "reservations")
@@ -21,31 +20,30 @@ public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "check_in")
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate check_in;
+    private LocalDate checkInDate;
+    @Column(name = "check_out")
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate check_out;
-    private Period duration;
+    private LocalDate checkOutDate;
+    private int duration;
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
     private Client client;
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "room_id")
     private Room room;
-    @Enumerated(EnumType.STRING)
-    private RoomType type;
-    @Column(name = "number")
-    private Integer number;
+    @Column(name = "room_number")
+    private Integer roomNumber;
     private BigDecimal price;
 
     public Reservation(){}
 
     public Reservation(ReservationData reservation, Room room, Client client) {
-        this.check_in = reservation.check_in();
-        this.duration = reservation.duration();
-        this.check_out = reservation.check_out();
-        this.number = reservation.number();
-        this.type = room.getRoomType();
+        this.checkInDate = reservation.checkInDate();
+        this.checkOutDate = reservation.checkOutDate();
+        this.duration = (int) ChronoUnit.DAYS.between(checkInDate, checkOutDate);
+        this.roomNumber = reservation.roomNumber();
         this.price = room.getPricePerNight();
         this.client = client;
         this.room = room;
@@ -56,21 +54,17 @@ public class Reservation {
     }
 
     public LocalDate getCheckIn() {
-        return check_in;
+        return checkInDate;
     }
 
-    public Period getDuration(){return duration;}
+    public int getDuration(){return duration;}
 
     public LocalDate getCheckOut() {
-        return check_out;
-    }
-
-    public RoomType getType() {
-        return type;
+        return checkOutDate;
     }
 
     public Integer getNumber() {
-        return number;
+        return roomNumber;
     }
 
     public BigDecimal getPrice() {

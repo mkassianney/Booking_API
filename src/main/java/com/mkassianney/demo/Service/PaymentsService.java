@@ -53,7 +53,7 @@ public class PaymentsService {
 
     public Payment processPayment (PaymentData paymentData) throws Exception {
 
-        Stripe.apiKey = "";
+        Stripe.apiKey = "sk_test_51R950lGbY04CYewiISSrT9Og83aslbJ8fcDhJf3S4vSwJ052L1LNyZKysrw5cIgmQyJ9PxpYkBNs47gdlvcrs1Um00VJvsqwG9";
 
         Period p = Period.between(reservation.getCheckIn(),reservation.getCheckOut());
         int d = p.getDays();

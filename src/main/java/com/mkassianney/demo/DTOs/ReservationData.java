@@ -11,15 +11,16 @@ import java.util.Date;
 public record ReservationData(
         @NotNull
         @JoinColumn(name = "check_in")
-        LocalDate check_in,
-        @NotNull
-        Period duration,
+        LocalDate checkInDate,
         @NotNull
         @JoinColumn(name = "check_out")
-        LocalDate check_out,
+        LocalDate checkOutDate,
         @NotNull
-        @JoinColumn(name = "room_n")
-        Integer number,
-        Long client_id,
-        String client_cpf) {
+        @JoinColumn(name = "room_id")
+        Long roomId,
+        @NotNull
+        @JoinColumn(name = "room_number")
+        Integer roomNumber,
+        @NotNull
+        String clientCpf) {
 }

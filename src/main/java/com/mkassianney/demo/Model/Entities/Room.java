@@ -20,14 +20,14 @@ public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
-
+    @JoinColumn(name = "room_number")
     private Integer roomNumber;
     @Enumerated(EnumType.STRING)
     private RoomType roomType;
     private BigDecimal pricePerNight;
     private String description;
     private boolean available;
-    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Reservation> reservations;
 
     public Room(){}

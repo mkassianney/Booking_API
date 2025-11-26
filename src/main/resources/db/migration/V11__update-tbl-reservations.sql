@@ -1,0 +1,4 @@
+ALTER TABLE reservations
+    ADD COLUMN check_in TIMESTAMP NOT NULL,
+    ADD COLUMN check_out TIMESTAMP NOT NULL,
+    ADD COLUMN price NUMERIC(7,2) NOT NULL;

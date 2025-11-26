@@ -10,6 +10,8 @@ import com.mkassianney.demo.Model.Entities.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Period;
+
 @Service
 public class ReservationService {
     @Autowired
@@ -20,10 +22,14 @@ public class ReservationService {
     private ClientRepository clientR;
 
     public void createReservation(ReservationData data){
-        Room room = roomR.findByRoomNumber(data.number())
+        Room room = roomR.findByRoomNumber(data.roomNumber())
                 .orElseThrow(() -> new IllegalArgumentException("This room does´nt exist."));
 
-        Client client = clientR.findByCpf(data.client_cpf())
+        if (repository.existsConflict(data.roomNumber(), data.checkInDate(), data.checkOutDate())) {
+            throw new IllegalArgumentException("Room is not available for these dates");
+        }
+
+        Client client = clientR.findByCpf(data.clientCpf())
                 .orElseThrow(() -> new IllegalArgumentException("This client does´nt exist."));
 
         if (!room.isAvailable()) {
@@ -36,7 +42,6 @@ public class ReservationService {
 
         repository.save(reservation);
 
-        room.setAvailable(false);
         roomR.save(room);
 
     }

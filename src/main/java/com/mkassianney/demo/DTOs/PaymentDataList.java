@@ -15,8 +15,6 @@ public record PaymentDataList (
         @NotNull
         com.mkassianney.demo.Model.Entities.Reservation reservationId,
         @NotNull
-        Integer reservationNumber,
-        @NotNull
         Long client_id,
         @NotNull
         BigDecimal amount,
@@ -36,7 +34,7 @@ public record PaymentDataList (
 
 ){
     public PaymentDataList(Payment payment){
-        this(payment.getId(),payment.getReservation(),payment.getReservationNumber(),payment.getClient().getId(),
+        this(payment.getId(),payment.getReservation(),payment.getClient().getId(),
                 payment.getAmount(),payment.getCurrency(),payment.getPaymentStatus(),payment.getPaymentMethod(),payment.getTransactionId(),
                 payment.getCreatedAt(),payment.getUpdatedAt());
     }

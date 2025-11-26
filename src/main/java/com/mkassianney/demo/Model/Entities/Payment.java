@@ -24,8 +24,6 @@ public class Payment {
     @OneToOne
     @JoinColumn(name = "reservation_id")
     private Reservation reservation;
-    @Column(name = "reservation_number")
-    private @NotNull Integer reservationNumber;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="client_id")
     private Client client;
@@ -46,7 +44,6 @@ public class Payment {
     public Payment(Reservation reservation, PaymentData paymentData) {
 
         this.reservation = reservation;
-        this.reservationNumber = paymentData.reservation_number();
         this.client = reservation.getClient();
         this.amount = paymentData.amount();
         this.currency = paymentData.currency();
@@ -59,9 +56,6 @@ public class Payment {
 
     public void setReservation(Reservation reservation){
         this.reservation = reservation;
-    }
-    public void setReservationNumber(Integer reservation_number){
-        this.reservationNumber = reservation_number;
     }
 
     public void setAmount(BigDecimal amount) {
@@ -94,10 +88,6 @@ public class Payment {
 
     public Reservation getReservation() {
         return reservation;
-    }
-
-    public Integer getReservationNumber() {
-        return reservationNumber;
     }
 
     public Client getClient() {
