@@ -16,74 +16,57 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.time.Period;
-
 
 @Service
 public class PaymentsService {
 
-    @Autowired
-    private PaymentsRepository paymentRepository;
-    @Autowired
-    private ReservationRepository reservationRepository;
-    @Autowired
-    private ClientRepository clientRepository;
+    private final CardPaymentService cardPaymentService;
+    private final PaymentsRepository paymentRepository;
+    private final ReservationRepository reservationRepository;
+    private final ClientRepository clientRepository;
 
-    private Reservation reservation;
-    private Client c;
-    public Payment createPayment(PaymentData paymentData) {
+    @Autowired
+    public PaymentsService(CardPaymentService cardPaymentService,
+                           PaymentsRepository paymentRepository,
+                           ReservationRepository reservationRepository,
+                           ClientRepository clientRepository) {
+        this.cardPaymentService = cardPaymentService;
+        this.paymentRepository = paymentRepository;
+        this.reservationRepository = reservationRepository;
+        this.clientRepository = clientRepository;
+    }
 
-        if (paymentData.reservation_id() == null) {
-            throw new IllegalArgumentException("Reservation ID cannot be null");
+    public Payment processPayment(PaymentData paymentData) throws Exception {
+        // 1. Busca reservation e client
+        Reservation reservation = reservationRepository.findById(paymentData.reservationId())
+                .orElseThrow(() -> new EntityNotFoundException("Reservation not found"));
+        Client client = clientRepository.findByCpf(paymentData.clientCpf())
+                .orElseThrow(() -> new EntityNotFoundException("Client not found"));
+
+
+        PaymentIntent paymentIntent;
+        switch (paymentData.paymentMethod().toLowerCase()) {
+            case "card":
+                paymentIntent = cardPaymentService.createPayment(reservation, client, paymentData);
+                break;
+            default:
+                throw new IllegalArgumentException("Unsupported payment method: " + paymentData.paymentMethod());
         }
-        reservation = reservationRepository.findById(paymentData.reservation_id())
-                .orElseThrow(() -> new EntityNotFoundException("Reservation not found with id: " + paymentData.reservation_id()));
 
-        c = clientRepository.findByCpf(paymentData.client_cpf())
-                .orElseThrow(() -> new EntityNotFoundException("Client not found with cpf: " + paymentData.client_cpf()));
 
-        Payment payment = new Payment(reservation,paymentData);
+        Payment payment = new Payment();
+        payment.setReservation(reservation);
+        payment.setClient(reservation.getClient());
+        payment.setAmount(paymentData.amount());
+        payment.setCurrency(paymentData.currency());
+        payment.setPaymentMethod(paymentData.paymentMethod());
+        payment.setTransactionId(paymentIntent.getId());
+        payment.setPaymentStatus(PaymentStatus.PAID);
+        payment.setCreatedAt(LocalDateTime.now());
+        payment.setUpdatedAt(LocalDateTime.now());
 
         return paymentRepository.save(payment);
-    }
-
-    public PaymentsService(PaymentsRepository paymentRepository) {
-        this.paymentRepository = paymentRepository;
-    }
-
-    public Payment processPayment (PaymentData paymentData) throws Exception {
-
-        Stripe.apiKey = "${SK_TEST}";
-
-        Period p = Period.between(reservation.getCheckIn(),reservation.getCheckOut());
-        int d = p.getDays();
-
-        BigDecimal total = paymentData.getAmount()
-                .multiply(BigDecimal.valueOf(d))
-                .setScale(2); // multiplies the value of amount and the days;
-
-        Long amountInCents = total.multiply(BigDecimal.valueOf(100)).longValue(); // convert to cents;
-        PaymentIntentCreateParams params = PaymentIntentCreateParams.builder()
-                .setAmount(amountInCents)
-                .setCurrency(paymentData.getCurrency())
-                .setPaymentMethod(paymentData.getPaymentMethod())
-                .setReceiptEmail(c.getEmail())
-                .build();
-
-        PaymentIntent paymentIntent = PaymentIntent.create(params);
-
-        try{
-            Payment payment = new Payment();
-            payment.setReservation(reservation);
-            payment.setAmount(paymentData.amount());
-            payment.setCurrency(paymentData.currency());
-            payment.setPaymentMethod(paymentData.paymentMethod());
-            payment.setTransactionId(paymentIntent.getId());
-            payment.setPaymentStatus(PaymentStatus.PAID);
-
-            return paymentRepository.save(payment);
-        } catch(Exception exception){
-            throw new RuntimeException(exception);
-        }
     }
 }

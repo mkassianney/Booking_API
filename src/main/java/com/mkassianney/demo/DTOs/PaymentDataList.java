@@ -10,31 +10,21 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public record PaymentDataList (
-        @NotNull
-        Long id,
-        @NotNull
-        Long client_id,
-        @NotNull
-        Long reservation_id,
-        @NotNull
-        BigDecimal amount,
-        @NotNull
-        String currency,
-        @Enumerated(EnumType.STRING)
-        PaymentStatus paymentStatus,
-        @NotNull
-        String paymentMethod,
-        @NotNull
-        String transactionId,
-        @NotNull
-        LocalDateTime createdAt,
-        @NotNull
-        LocalDateTime updatedAt
+        @NotNull Long id,
+        @NotNull Long clientId,
+        @NotNull Long reservationId,
+        @NotNull BigDecimal amount,
+        @NotNull String currency,
+        @Enumerated(EnumType.STRING) PaymentStatus paymentStatus,
+        @NotNull String paymentMethod,
+        @NotNull String transactionId,
+        @NotNull LocalDateTime createdAt,
+        @NotNull LocalDateTime updatedAt
 
 
 ){
     public PaymentDataList(Payment payment){
-        this(payment.getId(),payment.getClient().getId(),payment.getReservation().getId(),
+        this(payment.getId(),payment.getId(),payment.getReservation().getId(),
                 payment.getAmount(),payment.getCurrency(),payment.getPaymentStatus(),payment.getPaymentMethod(),payment.getTransactionId(),
                 payment.getCreatedAt(),payment.getUpdatedAt());
     }

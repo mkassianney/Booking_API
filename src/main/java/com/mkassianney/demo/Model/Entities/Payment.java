@@ -21,11 +21,11 @@ public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "reservation_id")
     private Reservation reservation;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="client_id")
+    @ManyToOne
+    @JoinColumn(name = "client_id")
     private Client client;
     private BigDecimal amount;
     private String currency;
@@ -56,6 +56,14 @@ public class Payment {
 
     public void setReservation(Reservation reservation){
         this.reservation = reservation;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 
     public void setAmount(BigDecimal amount) {

@@ -25,7 +25,6 @@ public class PaymentsController {
     @PostMapping("/toPay")
     @Transactional
     public void newPayment(@RequestBody @Valid PaymentData paymentData) throws Exception {
-        paymentsService.createPayment(paymentData);
         paymentsService.processPayment(paymentData);
     }
 
