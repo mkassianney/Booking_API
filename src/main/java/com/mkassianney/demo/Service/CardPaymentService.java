@@ -14,7 +14,7 @@ import java.time.Period;
 
 @Service
 public class CardPaymentService {
-    @Value("${stripe.api.secret}")
+    @Value("${stripe.api.key}")
     private String secretKey;
 
     public PaymentIntent createPayment(Reservation reservation, Client client, PaymentData data) throws Exception {

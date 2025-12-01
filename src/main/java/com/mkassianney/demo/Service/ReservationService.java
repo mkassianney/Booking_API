@@ -1,6 +1,7 @@
 package com.mkassianney.demo.Service;
 
 import com.mkassianney.demo.DTOs.ReservationData;
+import com.mkassianney.demo.DTOs.ReservationSimpleResponse;
 import com.mkassianney.demo.Model.Entities.Reservation;
 import com.mkassianney.demo.Model.Entities.Room;
 import com.mkassianney.demo.Repository.ClientRepository;
@@ -10,7 +11,10 @@ import com.mkassianney.demo.Model.Entities.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.time.Period;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ReservationService {
@@ -43,6 +47,17 @@ public class ReservationService {
         repository.save(reservation);
 
         roomR.save(room);
+
+    }
+
+    public List<ReservationSimpleResponse> existsReservation (Long id) throws Exception {
+       boolean client = clientR.existsById(id);
+
+        if(!client){
+            throw new Exception("This client does not exist or does not have a reservation: " + id);
+        }
+
+        return repository.findListByClientId(id);
 
     }
 }

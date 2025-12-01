@@ -11,20 +11,13 @@ import java.time.LocalDate;
 import java.time.Period;
 
 public record ReservationDataList (
-        @NotNull
-        Long id,
-        @NotNull
-        LocalDate check_in,
-        @NotNull
-        int duration,
-        @NotNull
-        LocalDate check_out,
-        @NotNull
-        Integer number,
-        @NotNull
-        BigDecimal price,
-        @NotNull
-        Long client_id
+        @NotNull Long id,
+        @NotNull LocalDate check_in,
+        @NotNull int duration,
+        @NotNull LocalDate check_out,
+        @NotNull Integer number,
+        @NotNull BigDecimal price,
+        @NotNull Long client_id
 
 ){
         public ReservationDataList(Reservation reservation){

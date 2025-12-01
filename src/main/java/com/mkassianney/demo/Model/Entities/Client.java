@@ -23,7 +23,7 @@ public class Client {
     private String email;
     private String cpf;
     private String cellphone;
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "client")
     private List<Reservation> reservations = new ArrayList<>();
 
     public Client(){}
@@ -54,5 +54,9 @@ public class Client {
 
     public String getCellphone() {
         return cellphone;
+    }
+
+    public List<Reservation> getReservations() {
+        return reservations;
     }
 }

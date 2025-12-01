@@ -27,7 +27,7 @@ public class Room {
     private BigDecimal pricePerNight;
     private String description;
     private boolean available;
-    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
     private List<Reservation> reservations;
 
     public Room(){}

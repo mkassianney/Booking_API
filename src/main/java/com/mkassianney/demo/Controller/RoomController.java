@@ -4,12 +4,14 @@ import com.mkassianney.demo.DTOs.RoomData;
 import com.mkassianney.demo.DTOs.RoomDataList;
 import com.mkassianney.demo.Model.Entities.Room;
 import com.mkassianney.demo.Repository.RoomRepository;
+import com.mkassianney.demo.Service.RoomService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 public class RoomController {
     @Autowired
     private RoomRepository roomRepository;
+    @Autowired
+    private RoomService service;
 
     @PostMapping("/newRoom")
     @Transactional
@@ -28,5 +32,17 @@ public class RoomController {
     public Page<RoomDataList> roomList(@PageableDefault(size = 10, sort = {"roomNumber"}) Pageable pageable){
         return roomRepository.findAll(pageable).map(RoomDataList::new);
     }
+
+    @DeleteMapping("/deleteRoom/{roomNumber}")
+    public void deleteRoom (@PathVariable int roomNumber){
+        service.deleteByNumber(roomNumber);
+    }
+
+    @PutMapping("/changeAvailability/{roomNumber}")
+    public ResponseEntity<String> toggleAvailability(@PathVariable int roomNumber) {
+        String message = service.toggleRoomAvailability(roomNumber);
+        return ResponseEntity.ok(message);
+    }
+
 
 }
