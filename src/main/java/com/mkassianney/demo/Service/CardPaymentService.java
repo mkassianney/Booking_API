@@ -6,6 +6,7 @@ import com.mkassianney.demo.Model.Entities.Reservation;
 import com.stripe.Stripe;
 import com.stripe.model.PaymentIntent;
 import com.stripe.param.PaymentIntentCreateParams;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -13,9 +14,11 @@ import java.time.Period;
 
 @Service
 public class CardPaymentService {
+    @Value("${stripe.api.secret}")
+    private String secretKey;
 
     public PaymentIntent createPayment(Reservation reservation, Client client, PaymentData data) throws Exception {
-        Stripe.apiKey = "sk_test_51R950lGbY04CYewiISSrT9Og83aslbJ8fcDhJf3S4vSwJ052L1LNyZKysrw5cIgmQyJ9PxpYkBNs47gdlvcrs1Um00VJvsqwG9";
+        Stripe.apiKey = secretKey;
 
         long days = Period.between(reservation.getCheckIn(), reservation.getCheckOut()).getDays();
         BigDecimal total = data.amount().multiply(BigDecimal.valueOf(days)).setScale(2);

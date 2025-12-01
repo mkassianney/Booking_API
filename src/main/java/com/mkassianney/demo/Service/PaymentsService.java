@@ -39,7 +39,7 @@ public class PaymentsService {
     }
 
     public Payment processPayment(PaymentData paymentData) throws Exception {
-        // 1. Busca reservation e client
+
         Reservation reservation = reservationRepository.findById(paymentData.reservationId())
                 .orElseThrow(() -> new EntityNotFoundException("Reservation not found"));
         Client client = clientRepository.findByCpf(paymentData.clientCpf())
