@@ -1,7 +1,7 @@
 # 📋 Booking API (PT - BR)
 
 Uma API REST desenvolvida para gerenciar o ciclo de vida completo de reservas de hotéis e pousadas fictícios.
-Com ela, é possível cadastrar clientes, quartos e reservas, além de registrar e acompanhar pagamentos utilizando a plataforma Stripe (com suporte aos métodos PIX e cartão de crédito).
+Com ela, é possível cadastrar clientes, quartos e reservas, além de registrar e acompanhar pagamentos utilizando a plataforma Stripe (com suporte ao método cartão de crédito).
 
 Esta aplicação é exclusivamente backend e foi construída com foco em organização, modularidade e boas práticas do ecossistema Spring.
 
