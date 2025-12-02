@@ -6,6 +6,7 @@ import com.mkassianney.demo.Model.Entities.Client;
 import com.mkassianney.demo.Model.Entities.Payment;
 import com.mkassianney.demo.Model.Entities.Reservation;
 import com.mkassianney.demo.Model.Enumerations.PaymentStatus;
+import com.mkassianney.demo.Model.Enumerations.ReservationStatus;
 import com.mkassianney.demo.Repository.ClientRepository;
 import com.mkassianney.demo.Repository.PaymentsRepository;
 import com.mkassianney.demo.Repository.ReservationRepository;
@@ -68,11 +69,11 @@ public class PaymentsService {
         payment.setCreatedAt(LocalDateTime.now());
         payment.setUpdatedAt(LocalDateTime.now());
 
+        reservation.setStatus(ReservationStatus.CONFIRMED);
+        reservationRepository.save(reservation);
+
         return paymentRepository.save(payment);
     }
-
-    // 1 - pesquisar cliente pelo cpf e pegar o id
-    // 2 - pesquisar na tabela payments se esse cliente tem algum pagamento pelo id
 
     public List<PaymentDataList> clientPayments(String cpf){
         Client client = clientRepository.findByCpf(cpf)
@@ -87,8 +88,10 @@ public class PaymentsService {
         Payment pay = paymentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Payment not found with this info: " + id));
 
+        Reservation res = pay.getReservation();
+
         pay.setPaymentStatus(PaymentStatus.CANCEL);
-        paymentRepository.save(pay);
+        res.setStatus(ReservationStatus.CANCELED);
 
         return "Payment is now canceled";
     }

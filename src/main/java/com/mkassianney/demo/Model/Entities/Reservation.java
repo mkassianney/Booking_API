@@ -1,5 +1,7 @@
 package com.mkassianney.demo.Model.Entities;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.mkassianney.demo.Model.Enumerations.PaymentStatus;
+import com.mkassianney.demo.Model.Enumerations.ReservationStatus;
 import com.mkassianney.demo.Model.Enumerations.RoomType;
 import com.mkassianney.demo.DTOs.ReservationData;
 import jakarta.persistence.*;
@@ -36,6 +38,9 @@ public class Reservation {
     @Column(name = "room_number")
     private Integer roomNumber;
     private BigDecimal price;
+    @Enumerated(EnumType.STRING)
+    @JoinColumn(name = "status")
+    private ReservationStatus status;
 
     public Reservation(){}
 
@@ -47,6 +52,7 @@ public class Reservation {
         this.price = room.getPricePerNight();
         this.client = client;
         this.room = room;
+        this.status = ReservationStatus.valueOf("PENDING");
     }
 
     public Long getId() {
@@ -77,6 +83,12 @@ public class Reservation {
 
     public Room getRoom() {
         return room;
+    }
+
+    public ReservationStatus getStatus(){return status;}
+
+    public void setStatus(ReservationStatus status) {
+        this.status = status;
     }
 }
 
