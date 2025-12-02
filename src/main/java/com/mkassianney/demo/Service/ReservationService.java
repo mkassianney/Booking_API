@@ -8,6 +8,7 @@ import com.mkassianney.demo.Repository.ClientRepository;
 import com.mkassianney.demo.Repository.ReservationRepository;
 import com.mkassianney.demo.Repository.RoomRepository;
 import com.mkassianney.demo.Model.Entities.Client;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,7 @@ public class ReservationService {
     @Autowired
     private ClientRepository clientR;
 
+    @Transactional
     public void createReservation(ReservationData data){
         Room room = roomR.findByRoomNumber(data.roomNumber())
                 .orElseThrow(() -> new IllegalArgumentException("This room does´nt exist."));

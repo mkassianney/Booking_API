@@ -4,6 +4,7 @@ import com.mkassianney.demo.Model.Entities.Payment;
 import com.mkassianney.demo.Model.Enumerations.PaymentStatus;
 import com.mkassianney.demo.Repository.PaymentsRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,7 @@ public class PaymentStatusService {
         return payment.getPaymentStatus();
     }
 
+    @Transactional
     public Payment updatePaymentStatus(Long paymentId, PaymentStatus status) {
         Payment payment = paymentsRepository.findById(paymentId)
                 .orElseThrow(() -> new EntityNotFoundException("Payment not found with id: " + paymentId));

@@ -1,6 +1,7 @@
 package com.mkassianney.demo.Service;
 
 import com.mkassianney.demo.DTOs.PaymentData;
+import com.mkassianney.demo.DTOs.PaymentDataList;
 import com.mkassianney.demo.Model.Entities.Client;
 import com.mkassianney.demo.Model.Entities.Payment;
 import com.mkassianney.demo.Model.Entities.Reservation;
@@ -8,16 +9,15 @@ import com.mkassianney.demo.Model.Enumerations.PaymentStatus;
 import com.mkassianney.demo.Repository.ClientRepository;
 import com.mkassianney.demo.Repository.PaymentsRepository;
 import com.mkassianney.demo.Repository.ReservationRepository;
-import com.stripe.Stripe;
 import com.stripe.model.PaymentIntent;
-import com.stripe.param.PaymentIntentCreateParams;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.Period;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PaymentsService {
@@ -38,6 +38,7 @@ public class PaymentsService {
         this.clientRepository = clientRepository;
     }
 
+    @Transactional
     public Payment processPayment(PaymentData paymentData) throws Exception {
 
         Reservation reservation = reservationRepository.findById(paymentData.reservationId())
@@ -68,5 +69,27 @@ public class PaymentsService {
         payment.setUpdatedAt(LocalDateTime.now());
 
         return paymentRepository.save(payment);
+    }
+
+    // 1 - pesquisar cliente pelo cpf e pegar o id
+    // 2 - pesquisar na tabela payments se esse cliente tem algum pagamento pelo id
+
+    public List<PaymentDataList> clientPayments(String cpf){
+        Client client = clientRepository.findByCpf(cpf)
+                .orElseThrow(() -> new EntityNotFoundException("Client not found with this info: " + cpf));
+
+        List<PaymentDataList> allPayments = paymentRepository.findAllByClientId(client.getId());
+        return allPayments;
+    }
+
+    @Transactional
+    public String cancelPayment(Long id){
+        Payment pay = paymentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Payment not found with this info: " + id));
+
+        pay.setPaymentStatus(PaymentStatus.CANCEL);
+        paymentRepository.save(pay);
+
+        return "Payment is now canceled";
     }
 }

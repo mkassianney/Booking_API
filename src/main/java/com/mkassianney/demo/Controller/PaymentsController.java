@@ -10,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -18,18 +21,30 @@ import org.springframework.web.bind.annotation.*;
 public class PaymentsController {
 
     @Autowired
-    private PaymentsRepository paymentsRepository;
+    private PaymentsRepository repository;
     @Autowired
-    private PaymentsService paymentsService;
+    private PaymentsService service;
 
     @PostMapping("/toPay")
     @Transactional
     public void newPayment(@RequestBody @Valid PaymentData paymentData) throws Exception {
-        paymentsService.processPayment(paymentData);
+        service.processPayment(paymentData);
     }
 
     @GetMapping("/paymentList")
     public Page<PaymentDataList> paymentList(@PageableDefault(size = 10, sort = {"id"}) Pageable pageable){
-        return paymentsRepository.findAll(pageable).map(PaymentDataList::new);
+        return repository.findAll(pageable).map(PaymentDataList::new);
     }
+
+    @GetMapping("/paymentsByClient/{cpf}")
+    public List<PaymentDataList> paymentListByClient (@PathVariable String cpf){
+        return service.clientPayments(cpf);
+    }
+
+    @PutMapping("/cancelPayment/{id}")
+    public ResponseEntity<String> cancelPayment(@PathVariable Long id){
+        String message =  service.cancelPayment(id);
+        return ResponseEntity.ok(message);
+    }
+
 }

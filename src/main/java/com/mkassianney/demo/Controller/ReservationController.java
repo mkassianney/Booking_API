@@ -3,7 +3,6 @@ package com.mkassianney.demo.Controller;
 import com.mkassianney.demo.DTOs.ReservationData;
 import com.mkassianney.demo.DTOs.ReservationDataList;
 import com.mkassianney.demo.DTOs.ReservationSimpleResponse;
-import com.mkassianney.demo.Model.Entities.Reservation;
 import com.mkassianney.demo.Repository.ReservationRepository;
 import com.mkassianney.demo.Service.ReservationService;
 import jakarta.transaction.Transactional;

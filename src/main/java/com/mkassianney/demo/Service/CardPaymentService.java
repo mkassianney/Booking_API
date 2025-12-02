@@ -6,6 +6,7 @@ import com.mkassianney.demo.Model.Entities.Reservation;
 import com.stripe.Stripe;
 import com.stripe.model.PaymentIntent;
 import com.stripe.param.PaymentIntentCreateParams;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ public class CardPaymentService {
     @Value("${stripe.api.key}")
     private String secretKey;
 
+    @Transactional
     public PaymentIntent createPayment(Reservation reservation, Client client, PaymentData data) throws Exception {
         Stripe.apiKey = secretKey;
 
