@@ -7,6 +7,8 @@ import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ import java.util.List;
 @Table(name = "rooms")
 @Getter
 @EqualsAndHashCode(of = "room_number")
+@NoArgsConstructor
 public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,11 +29,10 @@ public class Room {
     private RoomType roomType;
     private BigDecimal pricePerNight;
     private String description;
+    @Setter
     private boolean available;
     @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
     private List<Reservation> reservations;
-
-    public Room(){}
 
     public Room(@JsonProperty("value") @Valid RoomData roomData){
         this.roomNumber = roomData.roomNumber();
@@ -40,31 +42,4 @@ public class Room {
         this.available = true;
     }
 
-    public Long getId() {
-        return Id;
-    }
-
-    public int getRoomNumber() {
-        return roomNumber;
-    }
-
-    public RoomType getRoomType() {
-        return roomType;
-    }
-
-    public BigDecimal getPricePerNight() {
-        return pricePerNight;
-    }
-
-    public boolean isAvailable() {
-        return available;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setAvailable(boolean available) {
-        this.available = available;
-    }
 }

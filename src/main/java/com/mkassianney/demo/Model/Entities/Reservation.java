@@ -7,6 +7,8 @@ import com.mkassianney.demo.DTOs.ReservationData;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -17,7 +19,7 @@ import java.time.temporal.ChronoUnit;
 @Table(name = "reservations")
 @Getter
 @EqualsAndHashCode(of = "id")
-
+@NoArgsConstructor
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,9 +42,8 @@ public class Reservation {
     private BigDecimal price;
     @Enumerated(EnumType.STRING)
     @JoinColumn(name = "status")
+    @Setter
     private ReservationStatus status;
-
-    public Reservation(){}
 
     public Reservation(ReservationData reservation, Room room, Client client) {
         this.checkInDate = reservation.checkInDate();
@@ -53,42 +54,6 @@ public class Reservation {
         this.client = client;
         this.room = room;
         this.status = ReservationStatus.valueOf("PENDING");
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public LocalDate getCheckIn() {
-        return checkInDate;
-    }
-
-    public int getDuration(){return duration;}
-
-    public LocalDate getCheckOut() {
-        return checkOutDate;
-    }
-
-    public Integer getNumber() {
-        return roomNumber;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public Room getRoom() {
-        return room;
-    }
-
-    public ReservationStatus getStatus(){return status;}
-
-    public void setStatus(ReservationStatus status) {
-        this.status = status;
     }
 }
 

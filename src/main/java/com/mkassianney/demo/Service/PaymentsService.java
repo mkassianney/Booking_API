@@ -13,9 +13,11 @@ import com.mkassianney.demo.Repository.ReservationRepository;
 import com.stripe.model.PaymentIntent;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import lombok.Builder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -57,17 +59,20 @@ public class PaymentsService {
                 throw new IllegalArgumentException("Unsupported payment method: " + paymentData.paymentMethod());
         }
 
+        BigDecimal totalValue = paymentData.getAmount()
+                .multiply(BigDecimal.valueOf(reservation.getDuration()));
 
-        Payment payment = new Payment();
-        payment.setReservation(reservation);
-        payment.setClient(reservation.getClient());
-        payment.setAmount(paymentData.amount());
-        payment.setCurrency(paymentData.currency());
-        payment.setPaymentMethod(paymentData.paymentMethod());
-        payment.setTransactionId(paymentIntent.getId());
-        payment.setPaymentStatus(PaymentStatus.PAID);
-        payment.setCreatedAt(LocalDateTime.now());
-        payment.setUpdatedAt(LocalDateTime.now());
+        Payment payment = Payment.builder()
+                .reservation(reservation)
+                .client(client)
+                .amount(totalValue)
+                .currency(paymentData.currency())
+                .paymentMethod(paymentData.paymentMethod())
+                .transactionId(paymentIntent.getId())
+                .paymentStatus(PaymentStatus.PAID)
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .build();
 
         reservation.setStatus(ReservationStatus.CONFIRMED);
         reservationRepository.save(reservation);
@@ -89,8 +94,12 @@ public class PaymentsService {
                 .orElseThrow(() -> new EntityNotFoundException("Payment not found with this info: " + id));
 
         Reservation res = pay.getReservation();
+        pay = pay.toBuilder()
+                .paymentStatus(PaymentStatus.CANCEL)
+                .updatedAt(LocalDateTime.now())
+                .build();
 
-        pay.setPaymentStatus(PaymentStatus.CANCEL);
+        paymentRepository.save(pay);
         res.setStatus(ReservationStatus.CANCELED);
 
         return "Payment is now canceled";

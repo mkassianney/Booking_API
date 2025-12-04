@@ -15,17 +15,17 @@ public record ReservationSimpleResponse(
         @NotNull BigDecimal price
 ) {
     public ReservationSimpleResponse(Reservation reservation){
-        this(reservation.getId(), reservation.getCheckIn(), reservation.getCheckOut(), reservation.getDuration(),
-                reservation.getNumber(), reservation.getPrice());
+        this(reservation.getId(), reservation.getCheckInDate(), reservation.getCheckOutDate(), reservation.getDuration(),
+                reservation.getRoomNumber(), reservation.getPrice());
     }
 
     public static ReservationSimpleResponse from(Reservation r) {
         return new ReservationSimpleResponse(
                 r.getId(),
-                r.getCheckIn(),
-                r.getCheckOut(),
+                r.getCheckInDate(),
+                r.getCheckOutDate(),
                 r.getDuration(),
-                r.getNumber(),
+                r.getRoomNumber(),
                 r.getPrice()
         );
     }

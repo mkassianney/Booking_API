@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
 @Table(name = "clients")
 @Getter
 @EqualsAndHashCode(of = "cpf")
+@NoArgsConstructor
 public class Client {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,8 +28,6 @@ public class Client {
     @OneToMany(mappedBy = "client")
     private List<Reservation> reservations = new ArrayList<>();
 
-    public Client(){}
-
     @JsonCreator
     public Client(@JsonProperty("value") @Valid ClientData clients) {
         this.name = clients.name();
@@ -36,27 +36,4 @@ public class Client {
         this.cellphone = clients.cellphone();
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public String getCellphone() {
-        return cellphone;
-    }
-
-    public List<Reservation> getReservations() {
-        return reservations;
-    }
 }

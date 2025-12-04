@@ -22,7 +22,7 @@ public class CardPaymentService {
     public PaymentIntent createPayment(Reservation reservation, Client client, PaymentData data) throws Exception {
         Stripe.apiKey = secretKey;
 
-        long days = Period.between(reservation.getCheckIn(), reservation.getCheckOut()).getDays();
+        long days = Period.between(reservation.getCheckInDate(), reservation.getCheckOutDate()).getDays();
         BigDecimal total = data.amount().multiply(BigDecimal.valueOf(days)).setScale(2);
         long amountInCents = total.multiply(BigDecimal.valueOf(100)).longValue();
 

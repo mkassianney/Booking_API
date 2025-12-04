@@ -21,6 +21,6 @@ public record ReservationDataList (
 
 ){
         public ReservationDataList(Reservation reservation){
-                this(reservation.getId(),reservation.getCheckIn(), reservation.getDuration(),reservation.getCheckOut(),reservation.getNumber(),reservation.getPrice(), reservation.getClient().getId());
+                this(reservation.getId(),reservation.getCheckInDate(), reservation.getDuration(),reservation.getCheckOutDate(),reservation.getRoomNumber(),reservation.getPrice(), reservation.getClient().getId());
         }
 }

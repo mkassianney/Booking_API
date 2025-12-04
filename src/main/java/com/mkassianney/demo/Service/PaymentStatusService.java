@@ -8,6 +8,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class PaymentStatusService {
 
@@ -28,7 +30,11 @@ public class PaymentStatusService {
     public Payment updatePaymentStatus(Long paymentId, PaymentStatus status) {
         Payment payment = paymentsRepository.findById(paymentId)
                 .orElseThrow(() -> new EntityNotFoundException("Payment not found with id: " + paymentId));
-        payment.setPaymentStatus(status);
+
+        payment = payment.toBuilder()
+                .paymentStatus(status)
+                .updatedAt(LocalDateTime.now())
+                .build();
         return paymentsRepository.save(payment);
     }
 }
