@@ -1,7 +1,7 @@
 # 📋 Booking API (PT - BR)
 
 Uma API REST desenvolvida para gerenciar o ciclo de vida completo de reservas de hotéis e pousadas fictícios.
-Com ela, é possível cadastrar clientes, quartos e reservas, além de registrar e acompanhar pagamentos utilizando a plataforma Stripe (com suporte aos métodos PIX e cartão de crédito).
+Com ela, é possível cadastrar clientes, quartos e reservas, além de registrar e acompanhar pagamentos utilizando a plataforma Stripe (com suporte ao método cartão de crédito).
 
 Esta aplicação é exclusivamente backend e foi construída com foco em organização, modularidade e boas práticas do ecossistema Spring.
 
@@ -21,7 +21,7 @@ Esta aplicação é exclusivamente backend e foi construída com foco em organiz
 
 - Hibernate / JPA
 
-- Stripe API (pagamentos via PIX e cartão)
+- Stripe API (pagamentos via cartão)
 
 - Postman (para testes de requisições HTTP)
 
@@ -61,7 +61,7 @@ A API implementa CRUDs completos e rotinas de ciclo de vida de reserva:
 
 ### 💰 Pagamentos
 
-(Por meio da Stripe API — PIX e cartão)
+(Por meio da Stripe API — cartão)
 
 - Criar intenção de pagamento
 
@@ -181,7 +181,7 @@ This application is exclusively backend and was built with a focus on organizati
 
 - Hibernate / JPA
 
-- Stripe API (payments via PIX and credit card)
+- Stripe API (payments via credit card)
 
 - Postman (for testing HTTP requests)
 
@@ -221,7 +221,7 @@ The API implements complete CRUDs and reservation lifecycle routines:
 
 ### 💰 Payments
 
-(Via Stripe API — PIX and credit card)
+(Via Stripe API — credit card)
 
 - Create payment intent
 
