@@ -1,12 +1,9 @@
-package com.mkassianney.demo.DTOs;
+package com.mkassianney.demo.Model.DTORequest;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.JoinColumn;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
-import java.time.Period;
-import java.util.Date;
 
 public record ReservationData(
         @NotNull

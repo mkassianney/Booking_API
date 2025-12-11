@@ -2,7 +2,7 @@ package com.mkassianney.demo.Model.Entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mkassianney.demo.Model.Enumerations.RoomType;
-import com.mkassianney.demo.DTOs.RoomData;
+import com.mkassianney.demo.Model.DTORequest.RoomData;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import lombok.EqualsAndHashCode;
@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "Room")

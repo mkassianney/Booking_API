@@ -1,7 +1,7 @@
 package com.mkassianney.demo.Controller;
 
-import com.mkassianney.demo.DTOs.RoomData;
-import com.mkassianney.demo.DTOs.RoomDataList;
+import com.mkassianney.demo.Model.DTORequest.RoomData;
+import com.mkassianney.demo.Model.DTOResponse.RoomDataList;
 import com.mkassianney.demo.Model.Entities.Room;
 import com.mkassianney.demo.Repository.RoomRepository;
 import com.mkassianney.demo.Service.RoomService;

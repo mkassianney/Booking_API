@@ -1,7 +1,7 @@
 package com.mkassianney.demo.Controller;
 
-import com.mkassianney.demo.DTOs.ClientData;
-import com.mkassianney.demo.DTOs.ClientDataList;
+import com.mkassianney.demo.Model.DTORequest.ClientData;
+import com.mkassianney.demo.Model.DTOResponse.ClientDataList;
 import com.mkassianney.demo.Model.Entities.Client;
 import com.mkassianney.demo.Repository.ClientRepository;
 import com.mkassianney.demo.Service.ClientService;

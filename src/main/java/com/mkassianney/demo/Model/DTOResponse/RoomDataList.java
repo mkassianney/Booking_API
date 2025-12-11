@@ -1,4 +1,4 @@
-package com.mkassianney.demo.DTOs;
+package com.mkassianney.demo.Model.DTOResponse;
 
 import com.mkassianney.demo.Model.Entities.Room;
 import com.mkassianney.demo.Model.Enumerations.RoomType;

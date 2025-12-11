@@ -1,6 +1,6 @@
 package com.mkassianney.demo.Repository;
 
-import com.mkassianney.demo.DTOs.PaymentDataList;
+import com.mkassianney.demo.Model.DTOResponse.PaymentDataList;
 import com.mkassianney.demo.Model.Entities.Payment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;

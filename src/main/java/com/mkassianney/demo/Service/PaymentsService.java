@@ -1,41 +1,42 @@
 package com.mkassianney.demo.Service;
 
-import com.mkassianney.demo.DTOs.PaymentData;
-import com.mkassianney.demo.DTOs.PaymentDataList;
+import com.mkassianney.demo.Model.DTORequest.PaymentData;
+import com.mkassianney.demo.Model.DTOResponse.PaymentDataList;
 import com.mkassianney.demo.Model.Entities.Client;
 import com.mkassianney.demo.Model.Entities.Payment;
 import com.mkassianney.demo.Model.Entities.Reservation;
 import com.mkassianney.demo.Model.Enumerations.PaymentStatus;
 import com.mkassianney.demo.Model.Enumerations.ReservationStatus;
+import com.mkassianney.demo.Payment.Factory.PaymentProcessorFactory;
+import com.mkassianney.demo.Payment.Strategy.CardPaymentProcessor;
+import com.mkassianney.demo.Payment.Strategy.PaymentProcessor;
 import com.mkassianney.demo.Repository.ClientRepository;
 import com.mkassianney.demo.Repository.PaymentsRepository;
 import com.mkassianney.demo.Repository.ReservationRepository;
 import com.stripe.model.PaymentIntent;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
-import lombok.Builder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PaymentsService {
 
-    private final CardPaymentService cardPaymentService;
+    private final PaymentProcessorFactory factory;
     private final PaymentsRepository paymentRepository;
     private final ReservationRepository reservationRepository;
     private final ClientRepository clientRepository;
 
     @Autowired
-    public PaymentsService(CardPaymentService cardPaymentService,
+    public PaymentsService(PaymentProcessorFactory factory,
                            PaymentsRepository paymentRepository,
                            ReservationRepository reservationRepository,
                            ClientRepository clientRepository) {
-        this.cardPaymentService = cardPaymentService;
+        this.factory = factory;
         this.paymentRepository = paymentRepository;
         this.reservationRepository = reservationRepository;
         this.clientRepository = clientRepository;
@@ -46,38 +47,19 @@ public class PaymentsService {
 
         Reservation reservation = reservationRepository.findById(paymentData.reservationId())
                 .orElseThrow(() -> new EntityNotFoundException("Reservation not found"));
+
         Client client = clientRepository.findByCpf(paymentData.clientCpf())
                 .orElseThrow(() -> new EntityNotFoundException("Client not found"));
 
+        PaymentProcessor processor = factory.getProcessor(paymentData.paymentMethod());
 
-        PaymentIntent paymentIntent;
-        switch (paymentData.paymentMethod().toLowerCase()) {
-            case "card":
-                paymentIntent = cardPaymentService.createPayment(reservation, client, paymentData);
-                break;
-            default:
-                throw new IllegalArgumentException("Unsupported payment method: " + paymentData.paymentMethod());
-        }
+        PaymentIntent intent = processor.process(paymentData, reservation, client);
 
-        BigDecimal totalValue = paymentData.getAmount()
-                .multiply(BigDecimal.valueOf(reservation.getDuration()));
+        Payment payment = processor.createPayment(paymentData, reservation, client, intent);
 
-        Payment payment = Payment.builder()
-                .reservation(reservation)
-                .client(client)
-                .amount(totalValue)
-                .currency(paymentData.currency())
-                .paymentMethod(paymentData.paymentMethod())
-                .transactionId(paymentIntent.getId())
-                .paymentStatus(PaymentStatus.PAID)
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
-                .build();
+        paymentRepository.save(payment);
 
-        reservation.setStatus(ReservationStatus.CONFIRMED);
-        reservationRepository.save(reservation);
-
-        return paymentRepository.save(payment);
+        return payment;
     }
 
     public List<PaymentDataList> clientPayments(String cpf){

@@ -1,4 +1,4 @@
-package com.mkassianney.demo.DTOs;
+package com.mkassianney.demo.Model.DTORequest;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;
@@ -21,26 +21,4 @@ public record PaymentData(
         @JsonProperty("client_cpf")
         @CPF(message = "CPF isn't valid") @NotBlank @Valid String clientCpf
 ) {
-    public Long getReservationId(){
-        return reservationId;
-    }
-
-    public Integer getReservationNumber(){
-        return reservationNumber;
-    }
-
-    public BigDecimal getAmount(){
-        return amount;
-    }
-
-    public String getCurrency(){
-        return currency;
-    }
-
-    public String getPaymentMethod(){
-        return paymentMethod;
-    }
-    public String getClientCpf(){
-        return clientCpf;
-    }
 }

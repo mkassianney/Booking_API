@@ -1,9 +1,7 @@
 package com.mkassianney.demo.Model.Entities;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.mkassianney.demo.Model.Enumerations.PaymentStatus;
 import com.mkassianney.demo.Model.Enumerations.ReservationStatus;
-import com.mkassianney.demo.Model.Enumerations.RoomType;
-import com.mkassianney.demo.DTOs.ReservationData;
+import com.mkassianney.demo.Model.DTORequest.ReservationData;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -12,7 +10,6 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.temporal.ChronoUnit;
 
 @Entity(name = "Reservation")

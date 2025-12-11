@@ -2,7 +2,7 @@ package com.mkassianney.demo.Model.Entities;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.mkassianney.demo.DTOs.ClientData;
+import com.mkassianney.demo.Model.DTORequest.ClientData;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import lombok.EqualsAndHashCode;

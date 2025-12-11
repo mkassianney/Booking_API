@@ -1,6 +1,5 @@
 package com.mkassianney.demo.Model.Entities;
 
-import com.mkassianney.demo.DTOs.PaymentData;
 import com.mkassianney.demo.Model.Enumerations.PaymentStatus;
 import jakarta.persistence.*;
 import lombok.*;

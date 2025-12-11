@@ -1,7 +1,7 @@
 package com.mkassianney.demo.Controller;
 
-import com.mkassianney.demo.DTOs.PaymentData;
-import com.mkassianney.demo.DTOs.PaymentDataList;
+import com.mkassianney.demo.Model.DTORequest.PaymentData;
+import com.mkassianney.demo.Model.DTOResponse.PaymentDataList;
 import com.mkassianney.demo.Repository.PaymentsRepository;
 import com.mkassianney.demo.Service.PaymentsService;
 import jakarta.transaction.Transactional;
@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -45,6 +46,11 @@ public class PaymentsController {
     public ResponseEntity<String> cancelPayment(@PathVariable Long id){
         String message =  service.cancelPayment(id);
         return ResponseEntity.ok(message);
+    }
+    
+    @GetMapping("/payment/{id}")
+    public Optional<PaymentDataList> paymentData(@PathVariable Long id){
+        return repository.findById(id).map(PaymentDataList::new);
     }
 
 }

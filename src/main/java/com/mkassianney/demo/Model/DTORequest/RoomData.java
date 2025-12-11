@@ -1,4 +1,4 @@
-package com.mkassianney.demo.DTOs;
+package com.mkassianney.demo.Model.DTORequest;
 
 import com.mkassianney.demo.Model.Enumerations.RoomType;
 import jakarta.persistence.EnumType;

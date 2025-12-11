@@ -1,7 +1,7 @@
 package com.mkassianney.demo.Service;
 
-import com.mkassianney.demo.DTOs.ReservationData;
-import com.mkassianney.demo.DTOs.ReservationSimpleResponse;
+import com.mkassianney.demo.Model.DTORequest.ReservationData;
+import com.mkassianney.demo.Model.DTOResponse.ReservationSimpleResponse;
 import com.mkassianney.demo.Model.Entities.Reservation;
 import com.mkassianney.demo.Model.Entities.Room;
 import com.mkassianney.demo.Repository.ClientRepository;
@@ -12,10 +12,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
-import java.time.Period;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ReservationService {
@@ -31,9 +28,13 @@ public class ReservationService {
         Room room = roomR.findByRoomNumber(data.roomNumber())
                 .orElseThrow(() -> new IllegalArgumentException("This room does´nt exist."));
 
-        if (repository.existsConflict(data.roomNumber(), data.checkInDate(), data.checkOutDate())) {
+        boolean hasConflict = repository.existsConflict(data.roomNumber(), data.checkInDate(), data.checkOutDate());
+        boolean isCanceled = repository.checkStatus(data.roomNumber());
+
+        if (hasConflict && !isCanceled) {
             throw new IllegalArgumentException("Room is not available for these dates");
         }
+
 
         Client client = clientR.findByCpf(data.clientCpf())
                 .orElseThrow(() -> new IllegalArgumentException("This client does´nt exist."));

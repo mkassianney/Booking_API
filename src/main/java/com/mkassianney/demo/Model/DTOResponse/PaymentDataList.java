@@ -1,4 +1,4 @@
-package com.mkassianney.demo.DTOs;
+package com.mkassianney.demo.Model.DTOResponse;
 
 import com.mkassianney.demo.Model.Entities.Payment;
 import com.mkassianney.demo.Model.Enumerations.PaymentStatus;
@@ -24,7 +24,7 @@ public record PaymentDataList (
 
 ){
     public PaymentDataList(Payment payment){
-        this(payment.getId(),payment.getId(),payment.getReservation().getId(),
+        this(payment.getId(), payment.getReservation().getClient().getId(),payment.getReservation().getId(),
                 payment.getAmount(),payment.getCurrency(),payment.getPaymentStatus(),payment.getPaymentMethod(),payment.getTransactionId(),
                 payment.getCreatedAt(),payment.getUpdatedAt());
     }
